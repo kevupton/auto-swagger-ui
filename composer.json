@@ -18,7 +18,7 @@
             "Kevupton\\AutoSwaggerUI\\": "src/Kevupton/AutoSwaggerUI"
         },
         "files": [
-            "src/Owner/PackageName/Helpers/helpers.php"
+            "src/Kevupton/AutoSwaggerUI/Helpers/helpers.php"
         ]
     },
     "minimum-stability": "stable"
