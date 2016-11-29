@@ -1,7 +1,6 @@
 <?php namespace Kevupton\AutoSwaggerUI\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Kevupton\AutoSwaggerUI\AutoSwaggerUI;
 use Kevupton\AutoSwaggerUI\Controllers\LaravelController;
 use Kevupton\AutoSwaggerUI\Controllers\LumenController;
 
