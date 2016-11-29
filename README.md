@@ -1,4 +1,9 @@
 # auto-swagger-ui
+Give your project some swagger docs in a matter of seconds. Simply just install the package and service providers,
+optionally adding the configuration file, then BAM you now have a swagger ui endpoint. 
+
+Also integrates with swagger php annotations, allowing you scan your annotations and generate a json object at 
+a specified endpoint. 1, 2, 3, too much swag. ;)
 
 ## Install
 ```bash
