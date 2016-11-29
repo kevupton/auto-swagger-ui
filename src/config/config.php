@@ -1,19 +1,20 @@
 <?php
 
 return array(
+    // All values except are set by default
 
-    //prefix to each of the tables in the database
-    'database_prefix' => 'ref_',
+    // the path to the swagger ui implementation. By default will use its own swagger ui
+//    'path' => app_path('/swagger/dist'),
 
-    //how many uses to pretend we have at the start.
-    'start_at' => 1548,
+    // the url of the swagger ui
+    'ui-url' => '/swagger-ui',
 
-    //the number of positions jumped when a referral is made.
-    'jump_count' => 10,
+    // the url location for the scanned output
+    'json-url' => '/swagger.json',
 
-    //How often to add an extra fake referral
-    'addmore' => [
-        'interval' => 3600, //the time between each insert
-        'amount' => 1 //the amount to insert
-    ]
+    // the directory to scan
+    'scan-dir' => '/app/Http/Controllers',
+
+    // the default scanner which passes the json
+//    'scanner' => '\Kevupton\LaravelSwagger\scan'
 );
