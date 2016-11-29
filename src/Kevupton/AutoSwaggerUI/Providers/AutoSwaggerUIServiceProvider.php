@@ -21,7 +21,6 @@ class AutoSwaggerUIServiceProvider extends ServiceProvider {
     const SWAGGER_JSON_NAME = 'auto-swagger-ui.json';
 
     const DEFAULT_UI_URL = '/swagger-ui';
-    const DEFAULT_JSON_URL = '/swagger.json';
 
     /**
      * Bootstrap the application services.
@@ -30,7 +29,7 @@ class AutoSwaggerUIServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $this->publishes([__DIR__ . '/../../../config/config.php' => config_path('swagger-config.php')]);
+        $this->publishes([__DIR__ . '/../../../config/config.php' => config_path('swagger.php')]);
     }
 
     /**
@@ -40,8 +39,8 @@ class AutoSwaggerUIServiceProvider extends ServiceProvider {
      */
     public function register()
     {
-        $uiUrl      = config('swagger-json.ui-url', self::DEFAULT_UI_URL);
-        $jsonUrl    = config('swagger-json.json-url',self::DEFAULT_JSON_URL);
+        $uiUrl      = config('swagger.urls.ui', self::DEFAULT_UI_URL);
+        $jsonUrl    = config('swagger.scan.endpoint');
 
         $uiFn = '@getUiPath';
         $jsonFn = '@getJson';
@@ -50,12 +49,20 @@ class AutoSwaggerUIServiceProvider extends ServiceProvider {
 
         // registering a route varies for laravel and lumen
         if ($isLaravel) {
-            \Route::get($uiUrl . '{path}',  ['as' => self::SWAGGER_UI_NAME,     'uses' => self::LARAVEL_CONTROLLER . $uiFn])->where(['path' => '.*']);
-            \Route::get($jsonUrl,           ['as' => self::SWAGGER_JSON_NAME,   'uses' => self::LARAVEL_CONTROLLER . $jsonFn]);
+            // ---> Laravel Routes <----
+            \Route::get($uiUrl . '{path}', ['as' => self::SWAGGER_UI_NAME, 'uses' => self::LARAVEL_CONTROLLER . $uiFn])->where(['path' => '.*']);
+
+            if ($jsonUrl) {
+                \Route::get($jsonUrl, ['as' => self::SWAGGER_JSON_NAME, 'uses' => self::LARAVEL_CONTROLLER . $jsonFn]);
+            }
         }
         else {
-            $this->app->get($uiUrl . '{path:.*}',   ['as' => self::SWAGGER_UI_NAME,     'uses' => self::LUMEN_CONTROLLER . $uiFn]);
-            $this->app->get($jsonUrl,               ['as' => self::SWAGGER_JSON_NAME,   'uses' => self::LUMEN_CONTROLLER . $jsonFn]);
+            // ---> Lumen Routes <---
+            $this->app->get($uiUrl . '{path:.*}', ['as' => self::SWAGGER_UI_NAME, 'uses' => self::LUMEN_CONTROLLER . $uiFn]);
+
+            if ($jsonUrl) {
+                $this->app->get($jsonUrl, ['as' => self::SWAGGER_JSON_NAME, 'uses' => self::LUMEN_CONTROLLER . $jsonFn]);
+            }
         }
     }
 }

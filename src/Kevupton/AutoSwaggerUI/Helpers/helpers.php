@@ -32,6 +32,6 @@ if (!function_exists('auto_swagger_path')) {
      */
     function auto_swagger_path($path = null) {
         $currentPath = realpath(__DIR__ . '/../swagger-ui/dist');
-        return realpath(config('swagger-config.path', $currentPath) . '/' . $path);
+        return realpath(config('.swaggerpath', $currentPath) . '/' . $path);
     }
 }

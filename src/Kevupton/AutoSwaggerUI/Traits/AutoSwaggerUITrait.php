@@ -26,9 +26,9 @@ trait AutoSwaggerUITrait {
      */
     public function getJson() {
         // the directory to scan
-        $location = $this->basePath(config('swagger-config.scan-dir', $this->defaultScanDir));
+        $location = $this->basePath(config('swagger.scan.directory', $this->defaultScanDir));
         // the scanner must be an instance of zircote/swagger-php
-        $scanner = config('swagger-config.scanner', '\Kevupton\LaravelSwagger\scan');
+        $scanner = config('swagger.scan.scanner', '\Kevupton\LaravelSwagger\scan');
 
         return response()->json($scanner($location));
     }
@@ -60,7 +60,7 @@ trait AutoSwaggerUITrait {
 
             // we need to replace the url in the js so we know where to get the documentation from
             if (str_contains($path, 'index.html')) {
-                $file = str_replace('{{URL}}', config('swagger-config.json-url', 'http://petstore.swagger.io/v2/swagger.json'), $file);
+                $file = str_replace('{{URL}}', config('swagger.urls.json', 'http://petstore.swagger.io/v2/swagger.json'), $file);
             }
         }
         catch (\Exception $e) {
