@@ -1,0 +1,25 @@
+{
+    "name": "kevupton/auto-swagger-ui",
+    "description": "Want the swagger ui without having to set it up. Just install this package.",
+    "keywords": ["swagger-ui", "php"],
+    "type": "Extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Upton",
+            "email": "uptonkg@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kevupton\\AutoSwaggerUI\\": "src/Kevupton/AutoSwaggerUI"
+        },
+        "files": [
+            "src/Owner/PackageName/Helpers/helpers.php"
+        ]
+    },
+    "minimum-stability": "stable"
+}
