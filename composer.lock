@@ -485,16 +485,16 @@
         },
         {
             "name": "kevupton/laravel-swagger",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevupton/laravel-swagger.git",
-                "reference": "11b32665b647b23e95d176b09461da1380774916"
+                "reference": "ed5e5d8e2326763d478ef904b47f4493ba017cac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevupton/laravel-swagger/zipball/11b32665b647b23e95d176b09461da1380774916",
-                "reference": "11b32665b647b23e95d176b09461da1380774916",
+                "url": "https://api.github.com/repos/kevupton/laravel-swagger/zipball/ed5e5d8e2326763d478ef904b47f4493ba017cac",
+                "reference": "ed5e5d8e2326763d478ef904b47f4493ba017cac",
                 "shasum": ""
             },
             "require": {
@@ -533,7 +533,7 @@
                 "model",
                 "swagger"
             ],
-            "time": "2017-10-11 05:10:48"
+            "time": "2017-10-11 05:21:45"
         },
         {
             "name": "symfony/finder",
