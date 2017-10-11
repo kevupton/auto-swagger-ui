@@ -1,5 +1,7 @@
 <?php
 
+define('SWAGGER_UI_CONFIG', 'swagger-ui');
+
 if (!function_exists('is_lumen')) {
     /**
      * Checks whether or not the application is Lumen
@@ -33,5 +35,23 @@ if (!function_exists('auto_swagger_path')) {
     function auto_swagger_path($path = null) {
         $currentPath = realpath(__DIR__ . '/../swagger-ui/dist');
         return realpath(config('.swaggerpath', $currentPath) . '/' . $path);
+    }
+}
+
+if (!function_exists('sui_config')) {
+    function sui_config ($key, $default = null) {
+
+        if (is_null($key)) {
+            return config(SWAGGER_UI_CONFIG);
+        }
+
+        if (is_array($key)) {
+            foreach ($key as &$_key => $value) {
+                $_key = SWAGGER_UI_CONFIG . '.' . $_key;
+            }
+            return config($key);
+        }
+
+        return sui_config('' . $key, $default);
     }
 }

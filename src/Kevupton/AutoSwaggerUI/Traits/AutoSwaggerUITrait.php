@@ -3,6 +3,7 @@
 namespace Kevupton\AutoSwaggerUI\Traits;
 
 use Illuminate\Support\Facades\File;
+use Kevupton\AutoSwaggerUI\Providers\AutoSwaggerUIServiceProvider;
 
 trait AutoSwaggerUITrait {
 
@@ -26,9 +27,9 @@ trait AutoSwaggerUITrait {
      */
     public function getJson() {
         // the directory to scan
-        $location = $this->basePath(config('swagger.scan.directory', $this->defaultScanDir));
+        $location = $this->basePath(sui_config('scanner.path', $this->defaultScanDir));
         // the scanner must be an instance of zircote/swagger-php
-        $scanner = config('swagger.scan.scanner', '\Kevupton\LaravelSwagger\scan');
+        $scanner = sui_config('scanner.handler', '\Kevupton\LaravelSwagger\scan');
 
         return response()->json($scanner($location));
     }
@@ -46,7 +47,7 @@ trait AutoSwaggerUITrait {
          * This is required in order to render the appropriate styles, scripts and resources
          */
         if ($path == null || $path == '/') {
-            return redirect()->route('auto-swagger-ui', ['path' => '/index.html']);
+            return redirect()->route(AutoSwaggerUIServiceProvider::SWAGGER_UI_NAME, ['path' => '/index.html']);
         }
 
         $path = auto_swagger_path($path);
@@ -60,7 +61,7 @@ trait AutoSwaggerUITrait {
 
             // we need to replace the url in the js so we know where to get the documentation from
             if (str_contains($path, 'index.html')) {
-                $file = str_replace('{{URL}}', config('swagger.urls.json', 'http://petstore.swagger.io/v2/swagger.json'), $file);
+                $file = str_replace('{{URL}}', sui_config('urls.json', 'http://petstore.swagger.io/v2/swagger.json'), $file);
             }
         }
         catch (\Exception $e) {
