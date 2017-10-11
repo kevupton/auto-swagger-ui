@@ -23,10 +23,27 @@ return array(
         'output_url' => env('SWAGGER_SCANNER_OUTPUT_URL', '/api/swagger.json'),
 
         // the directory to scan
-        'path' => env('SWAGGER_SCANNER_PATH', '/app/Http/Controllers'),
+        'paths' => env('SWAGGER_SCANNER_PATH', '/app/Http/Controllers'),
 
         // the default scanner which passes the json
-        'handler' => env('SWAGGER_SCANNER_HANDLER', '\Kevupton\LaravelSwagger\scan')
+        'handler' => env('SWAGGER_SCANNER_HANDLER', '\Kevupton\LaravelSwagger\scan'),
+
+        // the options that is passed into the scanner
+        'options' => [
+
+            // the models to include in the scan
+            'models' => []
+        ],
+
+        // how long to save the scanned json for
+        'cache_duration' => env('SWAGGER_SCANNER_CACHE_DURATION', null),
+
+        // headers in the JSON response (for CORS)
+        'headers' => [
+            'Access-Control-Allow-Origin: *',
+            'Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization'
+        ]
     ]
 
 );

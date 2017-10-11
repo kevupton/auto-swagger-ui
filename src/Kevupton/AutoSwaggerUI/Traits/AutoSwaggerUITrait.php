@@ -7,7 +7,8 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\File;
 use Kevupton\AutoSwaggerUI\Providers\AutoSwaggerUIServiceProvider;
 
-trait AutoSwaggerUITrait {
+trait AutoSwaggerUITrait
+{
 
     private $defaultScanDir = '/app/Http/Controllers';
 
@@ -17,7 +18,8 @@ trait AutoSwaggerUITrait {
      * @param string $path
      * @return string
      */
-    private function basePath($path = '') {
+    private function basePath ($path = '')
+    {
         return realpath(app()->basePath() . '/' . $path);
     }
 
@@ -27,13 +29,34 @@ trait AutoSwaggerUITrait {
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getJson() {
-        // the directory to scan
-        $location = $this->basePath(sui_config('scanner.path', $this->defaultScanDir));
-        // the scanner must be an instance of zircote/swagger-php
-        $scanner = sui_config('scanner.handler', '\Kevupton\LaravelSwagger\scan');
+    public function getJson ()
+    {
 
-        return response()->json($scanner($location));
+        $json = app('cache')->remember(
+
+            SWAGGER_UI_CONFIG . '.scan_output',
+            sui_config('scanner.cache_duration', 0) ?: 0,
+            function () {
+
+                $paths = sui_config('scanner.paths', $this->defaultScanDir);
+                $options = sui_config('scanner.options', []);
+
+                if (is_string($paths)) {
+                    $paths = explode(',', $paths);
+                }
+
+                foreach ($paths as &$dir) {
+                    $dir = $this->basePath($dir);
+                }
+
+                // the scanner must be an instance of zircote/swagger-php
+                $scanner = sui_config('scanner.handler', '\Kevupton\LaravelSwagger\scan');
+                return $scanner($paths, $options);
+
+            }
+        );
+
+        return response($json, 200, sui_config('scanner.headers', []));
     }
 
     /**
@@ -44,7 +67,8 @@ trait AutoSwaggerUITrait {
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws FileNotFoundException
      */
-    public function getUiPath($path = null) {
+    public function getUiPath ($path = null)
+    {
         /*
          * Redirect all pages that are on the base to the index.html
          * This is required in order to render the appropriate styles, scripts and resources
@@ -66,8 +90,7 @@ trait AutoSwaggerUITrait {
             if (str_contains($path, 'index.html')) {
                 $file = str_replace('{{URL}}', url(sui_config('urls.json', 'http://petstore.swagger.io/v2/swagger.json')), $file);
             }
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new FileNotFoundException($path, 404, $e);
         }
 
