@@ -15,10 +15,10 @@ if (!function_exists('is_lumen')) {
 
 if (!function_exists('is_laravel')) {
     /**
-    * Checks whether or not the application is Laravel
-    *
-    * @return bool
-    */
+     * Checks whether or not the application is Laravel
+     *
+     * @return bool
+     */
     function is_laravel() {
         return !is_lumen();
     }
@@ -33,25 +33,26 @@ if (!function_exists('auto_swagger_path')) {
      * @return string
      */
     function auto_swagger_path($path = null) {
-        $currentPath = realpath(__DIR__ . '/../swagger-ui/dist');
-        return realpath(config('.swaggerpath', $currentPath) . '/' . $path);
+        $currentPath = sui_config('path') ?: realpath(__DIR__ . '/../swagger-ui/dist');
+        return realpath($currentPath . '/' . $path);
     }
 }
 
 if (!function_exists('sui_config')) {
-    function sui_config ($key, $default = null) {
+    function sui_config ($key = null, $default = null) {
 
         if (is_null($key)) {
             return config(SWAGGER_UI_CONFIG);
         }
 
         if (is_array($key)) {
-            foreach ($key as &$_key => $value) {
-                $_key = SWAGGER_UI_CONFIG . '.' . $_key;
+            $keys = [];
+            foreach ($key as $_key => $value) {
+                $keys[SWAGGER_UI_CONFIG . '.' . $_key] = $value;
             }
-            return config($key);
+            return config($keys);
         }
 
-        return sui_config('' . $key, $default);
+        return config(SWAGGER_UI_CONFIG . '.' . $key, $default);
     }
 }

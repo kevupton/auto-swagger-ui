@@ -2,6 +2,8 @@
 
 namespace Kevupton\AutoSwaggerUI\Traits;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\File;
 use Kevupton\AutoSwaggerUI\Providers\AutoSwaggerUIServiceProvider;
 
@@ -39,7 +41,8 @@ trait AutoSwaggerUITrait {
      * It will attempt to find the file and return it, otherwise it will return a 404.
      *
      * @param null $path
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws FileNotFoundException
      */
     public function getUiPath($path = null) {
         /*
@@ -61,11 +64,11 @@ trait AutoSwaggerUITrait {
 
             // we need to replace the url in the js so we know where to get the documentation from
             if (str_contains($path, 'index.html')) {
-                $file = str_replace('{{URL}}', sui_config('urls.json', 'http://petstore.swagger.io/v2/swagger.json'), $file);
+                $file = str_replace('{{URL}}', url(sui_config('urls.json', 'http://petstore.swagger.io/v2/swagger.json')), $file);
             }
         }
         catch (\Exception $e) {
-            return response('',404);
+            throw new FileNotFoundException($path, 404, $e);
         }
 
         $type = File::mimeType($path);

@@ -39,6 +39,18 @@ class AutoSwaggerUIServiceProvider extends ServiceProvider
      */
     public function register ()
     {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../../../config/config.php', SWAGGER_UI_CONFIG
+        );
+
+        $this->loadRoutes();
+    }
+
+    /**
+     * Loads all the routes
+     */
+    private function loadRoutes ()
+    {
         $uiUrl = sui_config('urls.ui', self::DEFAULT_UI_URL);
         $scannerOutputUrl = sui_config('scanner.output_url');
         $scannerEnabled = sui_config('scanner_enabled');
@@ -47,19 +59,15 @@ class AutoSwaggerUIServiceProvider extends ServiceProvider
         $uiFn = '@getUiPath';
         $jsonFn = '@getJson';
 
-        $this->mergeConfigFrom(
-            __DIR__ . '/../../../config/config.php', SWAGGER_UI_CONFIG
-        );
-
         // registering a route varies for laravel and lumen
         if (is_laravel()) {
             // ---> Laravel Routes <----
-            if ($uiEnabled) {
-                \Route::get($uiUrl . '{path}', ['as' => self::SWAGGER_UI_NAME, 'uses' => self::LARAVEL_CONTROLLER . $uiFn])->where(['path' => '.*']);
-            }
-
             if ($scannerEnabled) {
                 \Route::get($scannerOutputUrl, ['as' => self::SWAGGER_JSON_NAME, 'uses' => self::LARAVEL_CONTROLLER . $jsonFn]);
+            }
+
+            if ($uiEnabled) {
+                \Route::get($uiUrl . '{path}', ['as' => self::SWAGGER_UI_NAME, 'uses' => self::LARAVEL_CONTROLLER . $uiFn])->where(['path' => '.*']);
             }
         } else {
             // ---> Lumen Routes <---
@@ -67,12 +75,12 @@ class AutoSwaggerUIServiceProvider extends ServiceProvider
             $app = $this->app;
             $router = $app->router;
 
-            if ($uiEnabled) {
-                $router->get($uiUrl . '{path:.*}', ['as' => self::SWAGGER_UI_NAME, 'uses' => self::LUMEN_CONTROLLER . $uiFn]);
-            }
-
             if ($scannerEnabled) {
                 $router->get($scannerOutputUrl, ['as' => self::SWAGGER_JSON_NAME, 'uses' => self::LUMEN_CONTROLLER . $jsonFn]);
+            }
+
+            if ($uiEnabled) {
+                $router->get($uiUrl . '{path:.*}', ['as' => self::SWAGGER_UI_NAME, 'uses' => self::LUMEN_CONTROLLER . $uiFn]);
             }
         }
     }
