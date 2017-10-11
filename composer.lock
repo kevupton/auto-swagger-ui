@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "61a7de51cd8b9718a0a6ffe68c9bfca0",
-    "content-hash": "b6fd2e843c7b5e23430eed0b94ddd3f6",
+    "hash": "93ca8c02e5820822c8c0ba40faa829c0",
+    "content-hash": "1480acc24ff062bdab7c41ab6e2f0c5f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -485,16 +485,16 @@
         },
         {
             "name": "kevupton/laravel-swagger",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kevupton/laravel-swagger.git",
-                "reference": "ef57b038dd973371dc3ba6821dd562f62c0684f8"
+                "reference": "11b32665b647b23e95d176b09461da1380774916"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kevupton/laravel-swagger/zipball/ef57b038dd973371dc3ba6821dd562f62c0684f8",
-                "reference": "ef57b038dd973371dc3ba6821dd562f62c0684f8",
+                "url": "https://api.github.com/repos/kevupton/laravel-swagger/zipball/11b32665b647b23e95d176b09461da1380774916",
+                "reference": "11b32665b647b23e95d176b09461da1380774916",
                 "shasum": ""
             },
             "require": {
@@ -533,7 +533,7 @@
                 "model",
                 "swagger"
             ],
-            "time": "2017-10-11 03:47:17"
+            "time": "2017-10-11 05:10:48"
         },
         {
             "name": "symfony/finder",
