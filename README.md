@@ -16,7 +16,7 @@ composer require kevupton/auto-swagger-ui
 #### Laravel:
 In `config/app.php` , `providers` add
 ```php
-\Kevupton\AutoSwaggerUI\Providers\AutoSwaggerUIServiceProvider::class,`.
+\Kevupton\AutoSwaggerUI\Providers\AutoSwaggerUIServiceProvider::class,
 ```
 
 #### Lumen:
