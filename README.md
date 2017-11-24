@@ -20,14 +20,25 @@ In `config/app.php` add `\Kevupton\AutoSwaggerUI\Providers\AutoSwaggerUIServiceP
 In `bootstrap/app.php` add `$app->register(\Kevupton\AutoSwaggerUI\Providers\AutoSwaggerUIServiceProvider::class);`
 
 
+## Run
+Once you have registered the service provider, you will be able to access the swagger page at:
+```bash
+http://{my-host}/api/swagger
+```
+Or the json at
+```bash
+http://{my-host}/api/swagger.json
+```
+
 ## Config
 
-public the configuration file:
-
+The package can be configured by publishing the config or copying the config from the vendor files.
+To publish: 
 ```bash
 php artisan vendor:publish
 ```
-Then the config pieces can be edited how you please.
+
+The config:
 ```php
 <?php
 
@@ -79,9 +90,6 @@ return array(
 
 );
 ```
-
-If you do not wish to have the scanning functionality, simply comment out the scanner. By default it will already 
-be commented out.
 
 *Note: Lumen will probably need to copy the config from the config file in this package, to `swagger.php` and 
 register the configuration `$app->configure('swagger');` in the `bootstrap/app.js`.*
