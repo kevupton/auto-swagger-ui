@@ -7,7 +7,7 @@ a specified endpoint. 1, 2, 3, too much swag. ;)
 
 ## Install
 ```bash
-composer require kevupton/auto-swagger-php
+composer require kevupton/auto-swagger-ui
 ```
 
 ## Setup
