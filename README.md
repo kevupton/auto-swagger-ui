@@ -99,3 +99,26 @@ return array(
 
 *Note: Lumen will probably need to copy the config from the config file in this package, to `swagger.php` and 
 register the configuration `$app->configure('swagger');` in the `bootstrap/app.js`.*
+
+**NGINX**
+You may need to adjust your config file so that redirects for files not found using this line:
+
+`try_files $uri /index.php;`
+
+Example:
+
+```conf
+    location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc|svg|woff|woff2|ttf)$ {
+      try_files $uri /index.php;
+      expires 1M;
+      access_log off;
+      add_header Cache-Control "public";
+    }
+
+    location ~* \.(?:css|js)$ {
+      try_files $uri /index.php;
+      expires 7d;
+      access_log off;
+      add_header Cache-Control "public";
+    }
+```
